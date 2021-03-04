@@ -57,19 +57,19 @@ function App() {
   let [index, setIndex] = useState(0); // current instruction index
 
   // Start using a faction.
-  const _start = (f) => {
-    factionKey = f; setFactionKey(f);
-    setCard(deckState[f] || DECK[f].length); _nextCard();
-  };
+  const _start = (f) => { factionKey = f; setFactionKey(f); _nextCard(); };
 
   // Draw the next card. (Shuffle and reset when we reach the end.)
   const _nextCard = () => {
-    var deck = deckState[factionKey]; // remaining cards in the faction deck.
-    if (!deck) { deck = shuffle(Object.keys(DECK[factionKey])); }
+    // Remaining cards in the persistent faction deck.
+    var deck = deckState[factionKey] || [];
+    if (!deck || deck.length === 0) {
+      deck = shuffle(Object.keys(DECK[factionKey]));
+    }
     setIndex(0);
     setCard(deck.pop());
     deckState[factionKey] = deck;
-    setDeckState(deck);
+    setDeckState(deckState);
   };
 
   // Increment the current instruction.
@@ -84,7 +84,7 @@ function App() {
 
   // Stop using a faction.
   const _stop = () => {
-    setFactionKey(null); setCard(0); setIndex(0);
+    setFactionKey(null); setCard(null); setIndex(0);
   };
 
   // Evaluate a bytecode instruction in-context.
@@ -124,8 +124,7 @@ function App() {
 
     dialog = (
       <Dialog type={opts.length > 1 ? 'primary' : 'secondary'} options={opts}>
-        <b>({factionKey}/{card}.{index})</b>
-        <ReactMarkdown>{inst.text}</ReactMarkdown>
+        <ReactMarkdown children={inst.text} />
       </Dialog>
     );
   }
@@ -148,7 +147,7 @@ function App() {
 function Dialog(props) {
   return (
     <Card border={props.type || 'secondary'}>
-      <Card.Body><Card.Text>{props.children}</Card.Text></Card.Body>
+      <Card.Body>{props.children}</Card.Body>
       <Card.Footer>
         <ButtonToolbar className="justify-content-between">
           {props.options}
