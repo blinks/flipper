@@ -1,6 +1,7 @@
 import './App.css';
 
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 // Bootstrap components.
 import Button from 'react-bootstrap/Button';
@@ -57,7 +58,6 @@ function App() {
 
   // Start using a faction.
   const _start = (f) => {
-    log(`[${f} START]`); factionKey = f; setFactionKey(f);
     setCard(deckState[f] || DECK[f].length); _nextCard();
   };
 
@@ -83,15 +83,14 @@ function App() {
 
   // Stop using a faction.
   const _stop = () => {
-    log(`[${factionKey} STOP]`); setFactionKey(null);
     setCard(0); setIndex(0);
   };
 
   // Evaluate a bytecode instruction in-context.
   const evaluate = (inst, choice) => {
     const bytecode = inst[choice];
-    log(`${factionKey}/${card}[${index}]: ` +
-        `${inst.text} -> ${choice} (${humanize(bytecode)})`);
+    log(`${factionKey}/${card}[${index}] ` +
+        `-> ${choice} (${humanize(bytecode)})`);
 
     switch (bytecode) {
     case NEXT_CARD: _nextCard(); break;
@@ -124,7 +123,8 @@ function App() {
 
     dialog = (
       <Dialog type={opts.length > 1 ? 'primary' : 'secondary'} options={opts}>
-        <b>({factionKey}/{card}.{index})</b> {inst.text}
+        <b>({factionKey}/{card}.{index})</b>
+        <ReactMarkdown>{inst.text}</ReactMarkdown>
       </Dialog>
     );
   }
@@ -164,7 +164,7 @@ const DECK = {
         yes: 1, no: NEXT_CARD },
       { text: "Cubes exceed all Active non-Base adversaries in any spaces?",
         yes: 1, no: 2 },
-      { text: "Assault.", ok: STOP },
+      { text: "#### Assault\n- Select spaces using **Remove.**", ok: STOP },
       { text: "Train.", ok: STOP },
     ],
     B: [{ text: "Train.", ok: STOP }],
