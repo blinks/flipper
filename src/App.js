@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Card from 'react-bootstrap/Card';
+import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 // Possible responses to a dialog question, for cards.
@@ -26,7 +27,7 @@ const humanize = (bytecode) => {
   default:
     return `down ${bytecode} box(es)`;
   }
-}
+};
 
 // Fisher-Yates shuffle in-place implementation.
 function shuffle(es) {
@@ -35,7 +36,7 @@ function shuffle(es) {
     [es[i], es[j]] = [es[j], es[i]];
   }
   return es;
-}
+};
 
 // Encapsulated COIN bot interpreter.
 function App() {
@@ -130,12 +131,17 @@ function App() {
 
   return (
     <div className="container">
-      <Navbar bg="light"><Navbar.Brand>Flipper</Navbar.Brand></Navbar>
+      <Navbar bg="light">
+        <Navbar.Brand>Flipper</Navbar.Brand>
+        <Nav className="mr-auto">
+          <Nav.Link href="https://github.com/blinks/flipper">Source</Nav.Link>
+        </Nav>
+      </Navbar>
       {dialog} <hr />
       <ul>{renderHistory()}</ul>
     </div>
   );
-}
+};
 
 // Consistent bot dialog box.
 function Dialog(props) {
@@ -149,7 +155,7 @@ function Dialog(props) {
       </Card.Footer>
     </Card>
   );
-}
+};
 
 const DECK = {
   MG: {
