@@ -47,7 +47,7 @@ function App() {
     setHistory(history);
   };
   const renderHistory = () => {
-    history.map((entry, index) => (<li key={index}>{entry}</li>));
+    return history.map((entry, index) => (<li key={index}>{entry}</li>));
   };
 
   let [factionKey, setFactionKey] = useState(null); // top-level faction key
