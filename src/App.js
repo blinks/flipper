@@ -58,6 +58,7 @@ function App() {
 
   // Start using a faction.
   const _start = (f) => {
+    factionKey = f; setFactionKey(f);
     setCard(deckState[f] || DECK[f].length); _nextCard();
   };
 
@@ -83,7 +84,7 @@ function App() {
 
   // Stop using a faction.
   const _stop = () => {
-    setCard(0); setIndex(0);
+    setFactionKey(null); setCard(0); setIndex(0);
   };
 
   // Evaluate a bytecode instruction in-context.
