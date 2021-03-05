@@ -25,8 +25,7 @@ const humanize = (bytecode) => {
   switch (bytecode) {
   case NEXT_CARD: return 'next card';
   case STOP: return 'stop';
-  default:
-    return `down ${bytecode} box(es)`;
+  default: return `step ${bytecode}`;
   }
 };
 
@@ -90,8 +89,8 @@ function App() {
   // Evaluate a bytecode instruction in-context.
   const evaluate = (inst, choice) => {
     const bytecode = inst[choice];
-    log(`${factionKey}/${card}[${index}] ` +
-        `-> ${choice} (${humanize(bytecode)})`);
+    log(`${factionKey},${card},${index},` +
+        `${choice},${humanize(bytecode)}`);
 
     switch (bytecode) {
     case NEXT_CARD: _nextCard(); break;
