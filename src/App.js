@@ -39,7 +39,10 @@ function shuffle(es) {
 };
 
 // Encapsulated COIN bot interpreter.
-function App() {
+function App(props) {
+  // Use the deck in this file if none was passed in.
+  const deck = props.deck || DECK;
+
   let [history, setHistory] = useState([]);
   const log = (text) => {
     console.log(text);
@@ -63,7 +66,7 @@ function App() {
     // Remaining cards in the persistent faction deck.
     var deck = deckState[factionKey] || [];
     if (!deck || deck.length === 0) {
-      deck = shuffle(Object.keys(DECK[factionKey]));
+      deck = shuffle(Object.keys(deck[factionKey]));
     }
     setIndex(0);
     setCard(deck.pop());
@@ -75,7 +78,7 @@ function App() {
   // Throw if this takes us past the end of the card.
   const _inc = (inc) => {
     setIndex(index + inc);
-    if (index >= DECK[factionKey][card].length) {
+    if (index >= deck[factionKey][card].length) {
       throw new Error(
         `Card ${factionKey}/${card} doesn't have ${index} boxes.`);
     }
@@ -103,7 +106,7 @@ function App() {
   // Otherwise, show the current instruction's dialog.
   var dialog = null;
   if (!factionKey) {
-    const factionBtns = Object.keys(DECK).map(idx => (
+    const factionBtns = Object.keys(deck).map(idx => (
       <Button key={idx} onClick={(e) => _start(idx)}>{idx}</Button>
     ));
 
@@ -111,7 +114,7 @@ function App() {
       <Dialog type="primary" options={factionBtns}>Faction to act?</Dialog>
     );
   } else {
-    const inst = DECK[factionKey][card][index];
+    const inst = deck[factionKey][card][index];
     const opts = [];
     for (var k in RESPONSES) {
       const key = k;
