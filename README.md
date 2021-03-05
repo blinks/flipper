@@ -2,6 +2,8 @@
 
 A COIN bot development system.
 
+![Continuous Integration](https://github.com/blinks/flipper/actions/workflows/node.js.yml/badge.svg)
+
 ## tl;dr
 
 Fork this repository and edit the "DECK" map at the bottom of [App.js](src/App.js) -- then with `npm start` you should be able to play with your bot. 
