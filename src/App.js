@@ -167,7 +167,7 @@ const DECK = {
       { text: "Cubes exceed all Active non-Base adversaries in any spaces?",
         yes: 1, no: 2 },
       { text: "#### Assault\n- Select spaces using **Remove.**", ok: STOP },
-      { text: "Train.", ok: STOP },
+      { text: "#### Train\n- Select spaces using **Place Troops.**", ok: STOP },
     ],
     B: [{ text: "Train.", ok: STOP }],
     C: [{ text: "Train.", ok: STOP }],
